@@ -10,6 +10,13 @@
        
     require 'logica/conexion.php';
 
+    $k = $_POST['k'];
+    $J = $_POST['j'];
+    $m = $_POST['m'];
+    $theta = $_POST['theta'];
+
+    echo ("k: $k, j: $J, m: $m, theta: $theta ");
+
     $query = "SELECT * FROM salariomin";
     $result = mysqli_query($conexion, $query);
     $n = mysqli_num_rows($result);
@@ -35,7 +42,7 @@
 
     //Calcular el PMS
     $acumuladorPMS = 0;
-    $k = 3;
+    // $k = 3;
     $kAumentada = $k;
     $contk = 0;
 
@@ -62,7 +69,7 @@
 
     //Calcular el PMD
     $acumuladorPMD = 0;
-    $J = 2;
+    // $J = 2;
     $jAumentada = $J;
     $contj = 0;
 
@@ -88,7 +95,7 @@
     //Calcular A,B y PMDA
     $A = 0;
     $B = 0;
-    $m = 1;
+    // $m = 1;
     $PMDA = 0;
     $titulos[5] = "A";
     $titulos[6] = "B";

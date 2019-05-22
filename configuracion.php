@@ -18,12 +18,12 @@
 </head>
 <body>
     <a href="logica/logout.php">Cerrar sesión</a>
-    <form action="logica/configuracion.php" method="POST">
-        <input type="number" placeholder="k:" name="k">
-        <input type="number" placeholder="j:" name="j">
-        <input type="number" placeholder="m:" name="m">
-        <input type="number" placeholder="theta:" name="theta">
-        <button type="submit">Siguiente</button>    
+    <form action="tablas.php" method="POST">
+        <input type="number" placeholder="k:" name="k" id="k">
+        <input type="number" placeholder="j:" name="j" id="j">
+        <input type="number" placeholder="m:" name="m" id="m">
+        <input type="number" placeholder="theta:" name="theta" id="theta">
+        <button type="submit" id="btnSubmit">Siguiente</button>    
     </form>
     <a href="tablas.php">Ver tablas</a>
 </body>
@@ -31,5 +31,12 @@
 
 
 <?php
+    echo("<script>
+    btn = document.getElementById('btnSubmit');
+    btn.addEventListener('click', () => {
+        window.location.assign('tablas.php');
+    })
+
+    </script>");
     }
 ?>
