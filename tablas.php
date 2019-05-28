@@ -224,12 +224,13 @@
         <link rel="stylesheet" href="css/tablas.css">
         <link rel="stylesheet" href="css/estilos.css">
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
-        <title></title>
+        <title>Sistema de Pronóstico</title>
     </head>
     <body>
         <div class="top">
             <a href="var.php" id="home">Home</a>
             <a href="graficas.php" id="link">Gráficas</a>
+            <a href="analisis.php" id="link">Análisis</a>
             <a href="logica/logout.php" id="logout">Cerrar Sesión</a>
         </div>
 

@@ -103,7 +103,7 @@
                 $("#messageM").text("*Cantidad inválida para *m*, valor debe ser mayor a 0");    
             }
             if(errorTheta){
-                agregarError("#messageTheta", 'theta', 0, 1);
+                agregarError("#messageTheta", 'alpha', 0, 1);
             }
         }
 
