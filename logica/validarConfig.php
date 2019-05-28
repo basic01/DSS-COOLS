@@ -4,6 +4,7 @@
         $j = $_POST['j'];
         $m = $_POST['m'];
         $theta = $_POST['theta'];
+        $promedioPSE = $_POST['promedioPSE'];
 
         $errorK = false;
         $errorJ = false;
@@ -53,6 +54,8 @@
                     $_SESSION['j'] = $j;
                     $_SESSION['m'] = $m;
                     $_SESSION['theta'] = $theta;
+                    $_SESSION['n'] = $n;
+                    $_SESSION['promedioPSE'] = $promedioPSE;
                 }
             }
             else{
@@ -66,9 +69,9 @@
 
 <script>
 
-    function agregarError(idMensaje, variable){
+    function agregarError(idMensaje, variable, v1, v2){
         // $("#div-formConfig").css('marginTop', '3em');    
-        $(idMensaje).text("*Cantidad inválida para "+variable+"*");    
+        $(idMensaje).text("*Cantidad inválida para "+variable+"*, valor debe ser mayor a " + v1 + " y menor a " + v2);    
     }
 
     function quitarError(idMensaje){
@@ -76,6 +79,7 @@
         $(idMensaje).text("");
         $("#form-message").text("");
     }
+    n = "<?php echo $n ?>";
     errorK = "<?php echo $errorK ?>";
     errorJ = "<?php echo $errorJ ?>";
     errorM = "<?php echo $errorM ?>";
@@ -89,16 +93,17 @@
     else{
         if(!errorEmpty){
             if(errorK){
-                agregarError("#messageK", 'k');
+                agregarError("#messageK", 'k', 0, (n - 1));
             }
             if(errorJ){
-                agregarError("#messageJ", 'j');
+                const txt = n + " - k - 1"; 
+                agregarError("#messageJ", 'j', 0, txt);
             }
             if(errorM){
-                agregarError("#messageM", 'm');
+                $("#messageM").text("*Cantidad inválida para *m*, valor debe ser mayor a 0");    
             }
             if(errorTheta){
-                agregarError("#messageTheta", 'theta');
+                agregarError("#messageTheta", 'theta', 0, 1);
             }
         }
 

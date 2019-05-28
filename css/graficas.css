@@ -1,0 +1,56 @@
+.contenedor{
+    padding-bottom: 2em;
+    color: #353535;
+    margin: 0;
+    margin-top: 5em;
+    background-color: #FBFBFB;
+}
+
+.row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.header{
+    width: 100%;
+    padding: 0em 1em;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+}
+
+.header p{
+    margin-bottom: 0;
+}
+
+.grafica-pronosticos{
+    width: 100%;
+    background-color: rgba(0,0,0,.08);
+    border-radius: 5px;
+    padding: 1em;
+    text-align: left;
+    margin-bottom: 1em;
+}
+
+.grafica-pronosticos h3{
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.5em;
+    border-radius: 5px;
+    background-color: #353535;
+    padding: 5px 10px;
+}
+
+.grafica-pronosticos p{
+    color: rgba(0,0,0,.5);
+    background-color: #E7E7E7;
+    font-weight: lighter;
+    padding: 5px 10px;
+    font-size: 1.1em;
+}
+
+
+.grafica-pronosticos #curve_chart{
+    width: 100%;
+    height: 500px;
+}

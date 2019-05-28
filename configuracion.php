@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="css/estilos.css">
     <link rel="stylesheet" type="text/css" href="css/form.css">
     <link rel="stylesheet" type="text/css" href="css/configuracion.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
@@ -28,11 +29,13 @@
         var m = $("#m").val();
         var theta = $("#t").val();
         var submit = $("#submit").val();
+        var promedioPSE = $("#promedioPSE").val();
         $("#form-message").load('logica/validarConfig.php',{
           k: k,
           j: j,
           m: m,
           theta: theta,
+          promedioPSE: promedioPSE,
           submit:submit
         });
       })
@@ -72,8 +75,17 @@
                 <p id="messageM" class="form-message"></p>
             </div>
             <div class="form-group">
-                <input type="text" placeholder="theta:" name="t" id="t" class="form-control">
+                <input type="text" placeholder="alpha:" name="t" id="t" class="form-control">
                 <p id="messageTheta" class="form-message"></p>
+            </div>
+            <div class="form-group">
+              <select name="promedioPSE" id="promedioPSE" class="form-control">
+                <option value="PS">PS</option>
+                <option value="PMS">PMS</option>
+                <option value="PMD">PMD</option>
+                <option value="PMDA">PMDA</option>
+                <option value="PTMAC">PTMAC</option>
+              </select>
             </div>
             <p class="form-message" id="form-message"></p>
             <button type="submit" id="submit" name="submitConfig"  class="btn boton btnConfig">Siguiente</button>

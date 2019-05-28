@@ -8,7 +8,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/estilos.css">
     <link rel="stylesheet" type="text/css" href="css/form.css">
-    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script>
       $(document).ready(function(){
@@ -32,7 +32,7 @@
 
       <div class="row">
 
-        <div class="col-lg-4 col-sm-8 col-10 div-form" id="div-formLogin" >
+        <div class="col-lg-4 col-sm-8 col-10 div-form" id="div-formLogin">
 
           <h1>Inicio de sesión</h1>
           <div class="header header-center">
@@ -50,6 +50,7 @@
             </div>
             <p class="form-message"></p>
             <button type="submit" class="btn btnLogin" id="submit">Iniciar Sesión</button>  
+            <a href="acerca.php">Acerca de</a>
           </form>
     
         </div>
