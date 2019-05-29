@@ -11,7 +11,7 @@
           else{
             include 'logica/graficas.php';
           }
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,22 +24,24 @@
     <link rel="stylesheet" type="text/css" href="css/tablas.css">
     <link rel="stylesheet" type="text/css" href="css/analisis.css">
     <title>Sistema de Pronóstico</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.1.1/jspdf.plugin.autotable.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet">
 </head>
-<body>  
+<body>
 
       <div class="container-fluid contenedor">
         <div class="row">
             <div class="enlaces">
                 <a href="tablas.php" id="back">Regresar</a>
-                <a href="#" id="pdf">Generar PDF</a>
+                <a id="pdf" onclick="cargar();">Generar PDF</a>
                 <a href="logica/logout.php" id="logout">Cerrar Sesión</a>
             </div>
             <h1>Análisis Resultados</h1>
-            
+
             <p class="texto">Figura 1.0 - Tabla de pronósticos estimados</p>
-            <table class="table">
+            <table class="table" id="tabla">
                 <tbody>
             <?php
 
@@ -75,7 +77,7 @@
             ?>
                 </tbody>
             </table>
-            
+
             <div class="graficas">
                 <div class="grafica">
                     <p class="texto">Figura 2.0 - Gráfica de pronósticos estimados</p>
@@ -91,13 +93,66 @@
                 <p class="texto">Figura 4.0 - Visualización de de pronóstico</p>
                 <div id="velocimetro"></div>
             </div>
-            
+
         </div>
 
       </div>
 
 </body>
 </html>
+<script type="text/javascript">
+function cargar(){
+  var chart = new google.visualization.LineChart(document.getElementById('velocimetro'));
+  img = localStorage.getItem('cha1');
+  img2 = localStorage.getItem('cha2');
+  // img3 = localStorage.getItem('cha3');
+
+
+            var doc = new jsPDF();
+            doc.addImage(img, 30, 10, 150, 120);
+            doc.addImage(img2, 30, 140, 150, 120);
+            // doc.addImage(img3, 100, 20, 100, 80);
+            doc.autoTable({
+              html: document.getElementById('tabla'),
+              columnStyles: {
+                0: {
+                  columnWidth: 25
+                },
+                1: {
+                  columnWidth: 20
+                },
+                2: {
+                  columnWidth: 20
+                },
+                3: {
+                  columnWidth: 20
+                },
+                4: {
+                  columnWidth: 20
+                },
+                5: {
+                  columnWidth: 20
+                },
+                6: {
+                  columnWidth: 20
+                },
+                7: {
+                  columnWidth: 20
+                },
+                8:{
+                  columnWidth: 20
+                }
+
+              },
+              startY: 320,
+              margin: {
+                left:10
+              },
+            });
+            doc.save('resumen.pdf');
+ }
+</script>
+
 
 
 <?php
