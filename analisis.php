@@ -135,16 +135,14 @@
     </script>
 </head>
 <body>  
-    <div class="top">
-        <a href="var.php" id="home">Home</a>
-        <a href="tablas.php" id="link">Tablas</a>
-        <a href="graficas.php" id="link">Graficas</a>
-        <a href="analisis.php" id="link">Análisis</a>
-            <a href="logica/logout.php" id="logout">Cerrar Sesión</a>
-      </div>
 
       <div class="container-fluid contenedor">
         <div class="row">
+            <div class="enlaces">
+                <a href="tablas.php" id="back">Regresar</a>
+                <a href="#" id="pdf">Generar PDF</a>
+                <a href="logica/logout.php" id="logout">Cerrar Sesión</a>
+            </div>
             <h1>Análisis Resultados</h1>
             
             <p class="texto">Figura 1.0 - Tabla de pronósticos estimados</p>

@@ -134,6 +134,29 @@
                 </tbody>
             </table>
 
+            
+            <table class="table">
+                <tbody>
+                    
+            <?php
+
+                //count(current($eabs)) = length de columnas de arreglo eabs
+                print("<th class='header4'>ER PS </th>");
+                print("<th class='header4'>ER PMS k = $k </th>");
+                print("<th class='header4'>ER PMD j = $J </th>");
+                print("<th class='header4'>ER PMDA m = $m </th>");
+                print("<th class='header4'>ER PTMAC </th>");
+                
+                print("</tr>");
+                //Error Relativo EABS...
+                    for ($j=0; $j < sizeof($er); $j++) {
+                        print("<td>".$er[$j]."</td>");
+                    }
+                    print("</tr>");
+            ?>
+                </tbody>
+            </table>
+
 
         </div>
 

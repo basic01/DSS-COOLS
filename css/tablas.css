@@ -47,6 +47,10 @@ table{
     background-color: #F69C12;
 }
 
+.table .header4{
+    background-color: #353535;
+}
+
 .table .important{
     font-weight: bold;
 }

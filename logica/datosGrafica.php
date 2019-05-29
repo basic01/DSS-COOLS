@@ -6,12 +6,12 @@
     $theta = $_SESSION['theta'];
     $n = $_SESSION['n'];
     $pronosticos = $_SESSION['pronosticos'];
-    $em = $_SESSION['em'];
+    $errores = $_SESSION['errores'];
     $size = count(current($pronosticos));
 
     $mejor = 0;
-    for ($i=1; $i < sizeof($em); $i++) { 
-        if($em[$i]<$em[$i-1]){
+    for ($i=1; $i < sizeof($errores); $i++) { 
+        if($errores[$i]<$errores[$i-1]){
             $mejor = $i;
         }
     }

@@ -6,7 +6,7 @@
     $promedioPSE = $_SESSION['promedioPSE'];
     $datos = [];
     $n = $_SESSION['n'];
-    $bd = "salariominimo";
+    $bd = "salariomin";
 
     $query = "SELECT * FROM $bd";
     $result = mysqli_query($conexion, $query);
@@ -230,6 +230,7 @@
         $texto = $texto."<br>";
     }
 
+    //Arreglo pronósticos
     for ($i=0; $i < $n+1; $i++) {
         //Periodo
         $pronosticos[$i][0] = $datos[$i][0];
@@ -247,7 +248,26 @@
         $pronosticos[$i][6] = $datos[$i][9];
         
     }
+
+    for ($i=0; $i < sizeof($em); $i++) { 
+        $igual = false;
+        for ($j=$i+1; $j < sizeof($em); $j++) { 
+            if($em[$i] == $em[$j]){
+                $igual = true;
+            }
+        }
+        if($igual){
+            $error = ($em[$i] * 100) / $pronosticos[$n][$i+2];
+            $er[$i] = $error;
+            $errores[$i] = $er[$i];
+        }
+        else{
+            $er[$i] = "---";
+            $errores[$i] = $em[$i];
+        }
+    }
+
     $_SESSION['pronosticos'] = $pronosticos;
-    $_SESSION['em'] = $em;
+    $_SESSION['errores'] = $errores;
 
 ?>
