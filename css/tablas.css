@@ -39,8 +39,12 @@ table{
 }
 
 .table .header2{
-    /* background-color: #F69C12; */
     background-color: #484B84;
+}
+
+
+.table .header3{
+    background-color: #F69C12;
 }
 
 .table .important{

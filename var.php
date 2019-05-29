@@ -26,7 +26,7 @@
 
     <div class="container-fluid contenedor">
         <div class="row">
-            <div class="col-lg-6 col-sm-8 col-10 div-form">
+            <div class="col-lg-7 mt-5 col-sm-8 col-10 div-form">
                 <h1>Elección de variables</h1>
                 <div class="header header-center">
                     <p>Para continuar, seleccione el tema sobre el que quiera conocer su pronóstico:</p>

@@ -8,214 +8,8 @@
 
     else{
         if(isset($_SESSION['k'])){
-        
         require 'logica/conexion.php';
-
-        $k = $_SESSION['k'];
-        $J = $_SESSION['j'];
-        $m = $_SESSION['m'];
-        $theta = $_SESSION['theta'];
-        $promedioPSE = $_SESSION['promedioPSE'];
-        $datos = [];
-        $n = $_SESSION['n'];
-
-        $query = "SELECT * FROM salariomin";
-        $result = mysqli_query($conexion, $query);
-        // $n = mysqli_num_rows($result);
-
-        $titulos = ["Periodo", "Frecuencias", "PS"];
-
-        for ($i=0; $i < $n; $i++) {
-            $fila = mysqli_fetch_row($result);
-            $datos[$i][0] = $fila[0];
-            $datos[$i][1] = $fila[1];
-        }
-        $datos[$n][0] = $datos[$n-1][0] + 1;
-        $datos[$n][1] = "---";
-
-        //Calcular el PS
-        $acumulador = 0;
-        $datos[0][2] = "---";
-        for ($i=1; $i < $n+1; $i++) {
-            $acumulador += $datos[$i-1][1];
-            $PS = $acumulador/$i;
-            $datos[$i][2] = round($PS,2);
-        }
-
-        //Calcular el PMS
-        $acumuladorPMS = 0;
-        // $k = 3;
-        $kAumentada = $k;
-        $contk = 0;
-
-        $titulos[3] = "PMS k=".$k;
-
-        for ($i=0; $i < $k; $i++) {
-            $datos[$i][3] = "---";
-        }
-
-        for ($i=$k; $i <$n + 1; $i++) {
-
-            while($contk < $kAumentada){
-                    $acumuladorPMS += $datos[$contk][1];
-                    $contk++;
-                }
-
-            $PMS = $acumuladorPMS / $k;
-            $datos[$i][3] = round($PMS, 2);
-
-            $kAumentada++;
-            $contk = $kAumentada-$k;
-            $acumuladorPMS = 0;
-        }
-
-        //Calcular el PMD
-        $acumuladorPMD = 0;
-        // $J = 2;
-        $jAumentada = $J;
-        $contj = 0;
-
-        $titulos[4] = "PMD j=".$J;
-
-        for ($i=0; $i < $k + $J; $i++) {
-            $datos[$i][4] = "---";
-        }
-
-        for ($i=$k + $J; $i <$n + 1; $i++) {
-            $datos[$i][4] = $i;
-            $contj = $i-$J;
-            for ($z=0; $z < $J; $z++) {
-                $acumuladorPMD += $datos[$contj][3];
-                $contj++;
-            }
-            $PMD = $acumuladorPMD / $J;
-            $datos[$i][4] = round($PMD, 2);
-            $acumuladorPMD = 0;
-
-        }
-
-        //Calcular A,B y PMDA
-        $A = 0;
-        $B = 0;
-        // $m = 1;
-        $PMDA = 0;
-        $titulos[5] = "A";
-        $titulos[6] = "B";
-        $titulos[7] = "PMDA m = ".$m;
-        for ($i=0; $i < $k + $J; $i++) { 
-            $datos[$i][5] = "---";
-            $datos[$i][6] = "---";
-            $datos[$i][7] = "---";
-        }
-
-        for ($i=$k + $J; $i < $n+1; $i++) {
-            $A = (2*$datos[$i][3])-$datos[$i][4];
-            $B = (2*($datos[$i][3]-$datos[$i][4]))/($n-1);
-            $PMDA = ($A + $B) * $m;
-            $datos[$i][5] = round($A, 2);
-            $datos[$i][6] = round($B, 2);
-            $datos[$i][7] = round($PMDA, 2);
-        }
-
-
-        // Calcular EABS
-        for ($i=0; $i < 4; $i++) {
-
-            $eabs[0][$i] = "---";
-            //EABS PS, PMS, PMD
-            if($i < 3){
-                $pos = 2;
-            }
-            //EABS PMDA
-            if($i == 3){
-                $pos = 4;
-            }
-
-            for ($j=1; $j < 1 + $n - 1; $j++) {
-                //Datos frecuencias = $datos[$j][1]
-                //Datos promediosn = $datos[$j][$i+$pos]
-                if($datos[$j][$i+$pos] == "---"){
-                    $eabs[$j][$i] = "---";
-                }
-                else{
-                    $resta = $datos[$j][1] - $datos[$j][$i+$pos];
-                    $eabs[$j][$i] =  round(abs($resta),2);
-                }
-            }
-            $eabs[$n][$i] = "---";
-        }
-
-      function traerDatos($conexion){
-        $query = "SELECT * FROM salariomin";
-        $result = mysqli_query($conexion, $query);
-        $n = mysqli_num_rows($result);
-        return $result;
-      }
-      function calcularTMAC($conexion){
-        $results = [];
-        $datos = traerDatos($conexion);
-        $datos = mysqli_fetch_all($datos);
-
-        for ($i=0; $i < sizeof($datos)-1 ; $i++) {
-          $valor =((($datos[$i+1][1]/$datos[$i][1])-1) * 100);
-          $tmac = bcdiv($valor, '1', 2);
-          array_push($results,$tmac);
-        }
-        array_push($results,"---");
-        return($results);
-      }
-      function calcularPTMAC($conexion,$tmac){
-        $results = ["---"];
-        $datos = traerDatos($conexion);
-        $datos = mysqli_fetch_all($datos);;
-        $tam = sizeof($tmac)-1;
-        for ($i=0; $i < $tam; $i++) {
-          $valor =((($tmac[$i]/100)*($datos[$i+1][1]))+$datos[$i+1][1]);
-          $ptmac = bcdiv($valor, '1', 2);
-          array_push($results,$ptmac);
-        }
-        return($results);
-      }
-
-      function calcularEABS($conexion,$ptmac){
-        $results = ["---"];
-        $datos = traerDatos($conexion);
-        $datos = mysqli_fetch_all($datos);
-        for ($i=1; $i < sizeof($ptmac)-2; $i++) {
-          $j = $i+1;
-          $valor = (($datos[$j][1])-($ptmac[$i]));
-          $eabs =  bcdiv($valor, '1', 2);
-          array_push($results,$eabs);
-        }
-        $u = sizeof($datos)-1;
-        $o = sizeof($ptmac)-2;
-        $valor = (($datos[$u][1])-($ptmac[$o]));
-        $eabs = bcdiv($valor, '1', 2);
-        array_push($results,$eabs);
-        array_push($results,"---");
-        return($results);
-      }
-
-      //Mostar datos TMAC, PTMAC
-        $titulos[8] = "TMAC";
-        $titulos[9] = "PTMAC";
-        $tmac = calcularTMAC($conexion);
-        $ptmac = calcularPTMAC($conexion,$tmac);
-        $eabsPTMAC = calcularEABS($conexion,$ptmac);
-        for ($i=0; $i < $n+1; $i++) {
-            if($i == 0){
-                $datos[$i][8] ="---";
-                $datos[$i][9] =  "---";
-                $eabs[$i][4] = "---";
-            }
-            else{
-                $datos[$i][8] = $tmac[$i-1];
-                $datos[$i][9] =  $ptmac[$i-1];
-                $eabs[$i][4] = $eabsPTMAC[$i-1];
-            }
-          }
-
-
+        include 'logica/calculos.php';
     ?>
 
     <!DOCTYPE html>
@@ -229,6 +23,7 @@
     <body>
         <div class="top">
             <a href="var.php" id="home">Home</a>
+            <a href="tablas.php" id="link">Tablas</a>
             <a href="graficas.php" id="link">Gráficas</a>
             <a href="analisis.php" id="link">Análisis</a>
             <a href="logica/logout.php" id="logout">Cerrar Sesión</a>
@@ -240,7 +35,7 @@
             <div class="header header-center">
                 <p>A continuación se despliegan varias tablas
                     reflejando las distintos métodos para obtener
-                    el pronóstico de un dato en un periodo específico de tiempo:</p>
+                    el pronóstico de datos en un periodo específico de tiempo:</p>
             </div>
 
             <table class="table">
@@ -291,9 +86,9 @@
                 print("<tr>");
                 //count(current($eabs)) = length de columnas de arreglo eabs
                 print("<th class='header2'>EABS PS </th>");
-                print("<th class='header2'>EABS PMS k=$k </th>");
-                print("<th class='header2'>EABS PMD j=$J </th>");
-                print("<th class='header2'>EABS PMDA m=$m </th>");
+                print("<th class='header2'>EABS PMS k = $k </th>");
+                print("<th class='header2'>EABS PMD j = $J </th>");
+                print("<th class='header2'>EABS PMDA m = $m </th>");
                 print("<th class='header2'>EABS PTMAC </th>");
                 
                 print("</tr>");
@@ -313,6 +108,33 @@
 
 
 
+            <table class="table">
+                <tbody>
+                    
+            <?php
+            
+                print("<tr>");
+                //count(current($eabs)) = length de columnas de arreglo eabs
+                print("<th class='header3'>EM EABS PS </th>");
+                print("<th class='header3'>EM EABS PMS k = $k </th>");
+                print("<th class='header3'>EM EABS PMD j = $J </th>");
+                print("<th class='header3'>EM EABS PMDA m = $m </th>");
+                print("<th class='header3'>EM EABS PTMAC </th>");
+                
+                print("</tr>");
+
+
+                //Erro Medio EABS...
+                    for ($j=0; $j < sizeof($em); $j++) {
+                        print("<td>".$em[$j]."</td>");
+                    }
+                    print("</tr>");
+                
+            ?>
+                </tbody>
+            </table>
+
+
         </div>
 
 
@@ -320,24 +142,7 @@
     </html>
 
 <?php
-        for ($i=0; $i < $n+1; $i++) {
-            //Periodo
-            $pronosticos[$i][0] = $datos[$i][0];
-            //Frecuencia
-            $pronosticos[$i][1] = $datos[$i][1];
-            //PS
-            $pronosticos[$i][2] = $datos[$i][2];
-            //PMS
-            $pronosticos[$i][3] = $datos[$i][3];
-            //PMD
-            $pronosticos[$i][4] = $datos[$i][4];
-            //PMDA
-            $pronosticos[$i][5] = $datos[$i][7];
-            //PTMAC
-            $pronosticos[$i][6] = $datos[$i][9];
-            
-        }
-        $_SESSION['pronosticos'] = $pronosticos;
+        
         }
         else{
             header("location:configuracion.php");

@@ -29,7 +29,7 @@
     border-radius: 5px;
     padding: 1em;
     text-align: left;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 }
 
 .grafica-pronosticos h3{
@@ -50,7 +50,7 @@
 }
 
 
-.grafica-pronosticos #curve_chart{
+.grafica-pronosticos .curve_chart{
     width: 100%;
     height: 500px;
 }

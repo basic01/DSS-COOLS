@@ -22,7 +22,7 @@
 
                 require 'conexion.php';
 
-                $query = "SELECT * FROM salariomin";
+                $query = "SELECT * FROM examen";
                 $result = mysqli_query($conexion, $query);
                 $n = mysqli_num_rows($result);
                 
