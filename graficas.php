@@ -5,7 +5,13 @@
         exit();
     }
     else{
-        include 'logica/graficas.php';
+        if(!isset($_SESSION['k'])){
+            header("location:configuracion.php");
+          }
+          else{
+            include 'logica/graficas.php';
+          }
+        
     
 ?>
 

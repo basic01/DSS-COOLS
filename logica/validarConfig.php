@@ -5,6 +5,7 @@
         $m = $_POST['m'];
         $theta = $_POST['theta'];
         $promedioPSE = $_POST['promedioPSE'];
+        $bd = $_POST['bd'];
 
         $errorK = false;
         $errorJ = false;
@@ -21,8 +22,7 @@
             if(is_numeric($k) && is_numeric($j) && is_numeric($m) && is_numeric($theta)){
 
                 require 'conexion.php';
-
-                $query = "SELECT * FROM examen";
+                $query = "SELECT * FROM $bd";
                 $result = mysqli_query($conexion, $query);
                 $n = mysqli_num_rows($result);
                 
@@ -56,6 +56,7 @@
                     $_SESSION['theta'] = $theta;
                     $_SESSION['n'] = $n;
                     $_SESSION['promedioPSE'] = $promedioPSE;
+                    $_SESSION['bd'] = $bd;
                 }
             }
             else{

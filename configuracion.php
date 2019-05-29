@@ -5,6 +5,13 @@
         exit();
     }
     else{
+      if(isset($_REQUEST['v'])){
+        $bd = $_REQUEST['v'];
+      }
+      else{
+        header("location:var.php");
+      }
+
 ?>
 
 <!DOCTYPE html>
@@ -30,12 +37,14 @@
         var theta = $("#t").val();
         var submit = $("#submit").val();
         var promedioPSE = $("#promedioPSE").val();
+        var bd = $("#bd").val();
         $("#form-message").load('logica/validarConfig.php',{
           k: k,
           j: j,
           m: m,
           theta: theta,
           promedioPSE: promedioPSE,
+          bd: bd,
           submit:submit
         });
       })
@@ -57,6 +66,7 @@
         <div class="col-lg-4 col-sm-8 col-10 div-form" id="div-formConfig">
 
           <h1>Configuración</h1>
+
           <div class="header header-center">
             <p>Llena los campos correspondientes para realizar el análisis de los datos</p>
           </div>
@@ -88,6 +98,7 @@
               </select>
             </div>
             <p class="form-message" id="form-message"></p>
+            <input id="bd" name="bd" type="hidden" value="<?php echo $bd ?>">
             <button type="submit" id="submit" name="submitConfig"  class="btn boton btnConfig">Siguiente</button>
           </form>
     

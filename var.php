@@ -33,20 +33,20 @@
                 </div>
                 <ul>
                     <li>
-                        <a href="configuracion.php" class="option">
+                        <a href="configuracion.php?v=var1" class="option">
                             <div class="number" id="number1"><p>1</p></div>
                             <div class="data">
                                 <h4>Variable 1</h4>
-                                <p>Número de personas que han nacido en el país desde el 2010 al 2019</p>
+                                <p>Serie histórica del Producto Interno Bruto de México durante el periodo de 1919 al 2018.</p>
                             </div>
                         </a>
                     </li>
                     <li>
-                        <a href="configuracion.php" class="option">
+                        <a href="configuracion.php?v=var2" class="option">
                             <div class="number" id="number2"><p>2</p></div>
                             <div class="data">
                                 <h4>Variable 2</h4>
-                                <p>Número de personas que</p>
+                                <p>Serie histórica de la tasa de homicidios por 100 mil habitantes en el país durante el periodo de 1931 a 2017.</p>
                             </div>
                         </a>
                     </li>

@@ -6,7 +6,7 @@
     $promedioPSE = $_SESSION['promedioPSE'];
     $datos = [];
     $n = $_SESSION['n'];
-    $bd = "salariomin";
+    $bd = $_SESSION['bd'];
 
     //Validar PSE
     switch ($promedioPSE) {
@@ -22,7 +22,7 @@
 
         case 'PMD':
             $posPSE = 4;
-            $salto = $k+$j¿J;
+            $salto = $k+$J;
         break;
         
         case 'PMDA':

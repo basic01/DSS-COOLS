@@ -9,6 +9,7 @@
     $pronosticos = $_SESSION['pronosticos'];
     $errores = $_SESSION['errores'];
     $size = count(current($pronosticos));
+    $bd = $_SESSION['bd'];
 
     $mejor = 0;
     for ($i=1; $i < sizeof($errores); $i++) { 

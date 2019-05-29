@@ -11,6 +11,7 @@
         const theta = "<?php echo $theta ?>";
         const promedioPSE  = "<?php echo $promedioPSE ?>";
         const pronosticoMejor = "<?php echo $pronosticoMejor ?>";
+        const bd = "<?php echo $bd ?>";
 
       google.charts.load('current', {'packages':['corechart', 'gauge']});
       google.charts.setOnLoadCallback(drawChart);
@@ -110,22 +111,41 @@
 
 
         //Datos gráfica mejor
-        var data3 = google.visualization.arrayToDataTable([
-        ['Periodo', 'Frecuencia'],
-           <?php
-             print("['".$pronosticos[$n][0]."',".$pronosticos[$n][$mejor]."]");
-         ?>
-         ]);
- 
-         var options3 = {
-           width: '100%',
-           greenFrom:0, greenTo: 33, 
-           yellowFrom:33, yellowTo: 66,
-           redFrom: 66, redTo: 110,
-           minorTicks: 5
-         };
+        
+         if(bd == 'var1'){
+            var data3 = google.visualization.arrayToDataTable([
+                ['Periodo', 'Frecuencia'],
+                <?php
+                    print("['".$pronosticos[$n][0]."',".($pronosticos[$n][$mejor])."]");
+                ?>
+                ]);
 
+            var options3 = {
+                    width: '100%',
+                    greenFrom:7, greenTo: 15, 
+                    yellowFrom:2, yellowTo: 7,
+                    redFrom: -20, redTo: 2,
+                    minorTicks: 10
+                };
+        }
+        else {if(bd == 'var2'){
+            var data3 = google.visualization.arrayToDataTable([
+                ['Periodo', 'Frecuencia'],
+                <?php
+                    print("['".$pronosticos[$n][0]."',".($pronosticos[$n][$mejor]/1000)."]");
+                ?>
+                ]);
+                var options3 = {
+                    width: '100%',
+                    greenFrom:0, greenTo: 10, 
+                    yellowFrom:10, yellowTo: 20,
+                    redFrom: 20, redTo: 30,
+                    minorTicks: 10
+                };
+            }
+        }
 
+        
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
         var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
         var chart3 = new google.visualization.Gauge(document.getElementById('velocimetro'));
