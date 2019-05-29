@@ -8,6 +8,35 @@
     $n = $_SESSION['n'];
     $bd = "salariomin";
 
+    //Validar PSE
+    switch ($promedioPSE) {
+        case 'PS':
+            $posPSE = 2;
+            $salto = 1;
+        break;
+
+        case 'PMS':
+            $posPSE = 3;
+            $salto = $k;
+        break;
+
+        case 'PMD':
+            $posPSE = 4;
+            $salto = $k+$j¿J;
+        break;
+        
+        case 'PMDA':
+            $posPSE = 7;
+            $salto = $k + $J;
+        break;
+
+        case 'PTMAC':
+            $posPSE = 9;
+            $salto = 2;
+        break;
+    }
+
+
     $query = "SELECT * FROM $bd";
     $result = mysqli_query($conexion, $query);
     // $n = mysqli_num_rows($result);
@@ -169,9 +198,7 @@
                 array_push($results, "---");
             }
             else{
-                $texto = $datos[$i-1][1]." + (".$datos[$i-1][1]." * (".$tmac[$i-1]."/100))";
                 $valor = $datos[$i-1][1] + ($datos[$i-1][1] * ($tmac[$i-1]/100));
-                // $valor =((($tmac[$i]/100)*($datos[$i][1]))+$datos[$i][1]);
                 $ptmac = bcdiv($valor, '1', 2);
                 array_push($results,$ptmac);
             }
@@ -179,36 +206,54 @@
         return($results);
     }
 
-    function calcularEABS($conexion, $bd, $ptmac){
+    function calcularPSE($conexion, $datos, $n, $theta, $salto, $posPSE){
+        $results = [];
+        for ($j=0; $j <= $salto; $j++) { 
+            array_push($results, "---");
+        }
+        for ($j=$salto+1; $j < $n+1; $j++) { 
+            $valor = $datos[$j-1][$posPSE] + ($theta*($datos[$j-1][1]-$datos[$j-1][$posPSE]));
+            $pse = bcdiv($valor, '1', 2);
+            array_push($results, $pse);
+        }
+        return($results);
+    }
+
+    function calcularEABS($conexion, $bd, $arreglo){
         $results = [];
         $datos = traerDatos($conexion, $bd);
         $datos = mysqli_fetch_all($datos);
-        for ($i=0; $i < sizeof($ptmac)-1; $i++) {
-            if($ptmac[$i] == "---"){
+        for ($i=0; $i < sizeof($arreglo)-1; $i++) {
+            if($arreglo[$i] == "---"){
                 $eabs = "---";
             }
             else{
-                $valor = $datos[$i][1]-$ptmac[$i];
+                $valor = $datos[$i][1]-$arreglo[$i];
                 $eabs =  bcdiv(abs($valor), '1', 2);
             }
-
-        array_push($results,$eabs);
+            array_push($results,$eabs);
         }
 
         array_push($results,"---");
         return($results);
     }
 
-    //Mostar datos TMAC, PTMAC
+
+    //Mostar datos TMAC, PTMAC, PSE
     $titulos[8] = "TMAC";
     $titulos[9] = "PTMAC";
+    $titulos[10] = 'PSE '.$promedioPSE;
     $tmac = calcularTMAC($conexion, $bd);
     $ptmac = calcularPTMAC($conexion,$bd, $tmac);
     $eabsPTMAC = calcularEABS($conexion,$bd, $ptmac);
+    $pse = calcularPSE($conexion, $datos, $n, $theta, $salto, $posPSE);
+    $eabsPSE = calcularEABS($conexion,$bd, $pse);
     for ($i=0; $i < $n+1; $i++) {
             $datos[$i][8] = $tmac[$i];
             $datos[$i][9] =  $ptmac[$i];
+            $datos[$i][10] =  $pse[$i];
             $eabs[$i][4] = $eabsPTMAC[$i];
+            $eabs[$i][5] = $eabsPSE[$i];
     }
 
 
@@ -218,7 +263,7 @@
         $cont = 0;
         $sumEABS = 0;
 
-        for ($i=0; $i < $n; $i++) { 
+        for ($i=$j; $i < $n; $i++) { 
             if($eabs[$i][$j] != "---" || $eabs[$i][$j] == '0'){
                 $sumEABS = $sumEABS + $eabs[$i][$j];
                 $cont = $cont + 1;
@@ -246,6 +291,8 @@
         $pronosticos[$i][5] = $datos[$i][7];
         //PTMAC
         $pronosticos[$i][6] = $datos[$i][9];
+        //PSE
+        $pronosticos[$i][7] = $datos[$i][10];
         
     }
 
@@ -258,7 +305,7 @@
         }
         if($igual){
             $error = ($em[$i] * 100) / $pronosticos[$n][$i+2];
-            $er[$i] = $error;
+            $er[$i] = bcdiv(abs($error), '1', 2);
             $errores[$i] = $er[$i];
         }
         else{

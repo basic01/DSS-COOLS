@@ -90,6 +90,7 @@
                 print("<th class='header2'>EABS PMD j = $J </th>");
                 print("<th class='header2'>EABS PMDA m = $m </th>");
                 print("<th class='header2'>EABS PTMAC </th>");
+                print("<th class='header2'>EABS PSE $promedioPSE </th>");
                 
                 print("</tr>");
 
@@ -120,6 +121,7 @@
                 print("<th class='header3'>EM EABS PMD j = $J </th>");
                 print("<th class='header3'>EM EABS PMDA m = $m </th>");
                 print("<th class='header3'>EM EABS PTMAC </th>");
+                print("<th class='header3'>EM EABS PSE $promedioPSE </th>");
                 
                 print("</tr>");
 
@@ -146,6 +148,7 @@
                 print("<th class='header4'>ER PMD j = $J </th>");
                 print("<th class='header4'>ER PMDA m = $m </th>");
                 print("<th class='header4'>ER PTMAC </th>");
+                print("<th class='header4'>ER PSE $promedioPSE </th>");
                 
                 print("</tr>");
                 //Error Relativo EABS...
@@ -159,7 +162,6 @@
 
 
         </div>
-
 
     </body>
     </html>

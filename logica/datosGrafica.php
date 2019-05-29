@@ -4,6 +4,7 @@
     $J = $j;
     $m = $_SESSION['m'];
     $theta = $_SESSION['theta'];
+    $promedioPSE = $_SESSION['promedioPSE'];
     $n = $_SESSION['n'];
     $pronosticos = $_SESSION['pronosticos'];
     $errores = $_SESSION['errores'];
@@ -38,6 +39,10 @@
 
         case 6:
             $pronosticoMejor = 'PTMAC';
+        break;
+
+        case 7:
+            $pronosticoMejor = 'PSE '.$promedioPSE;
         break;
     }
 
